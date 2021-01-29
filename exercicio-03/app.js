@@ -115,7 +115,7 @@ apenas as letras iniciais dos nomes do array "dogNames";
 
 dogNames.push('Nina')
 
-const initials = `${dogNames[0][0]} ${dogNames[1][0]} ${dogNames[2][0]} ${dogNames[3][0]}`
+const initials = `${dogNames[0][0]}${dogNames[1][0]}${dogNames[2][0]}${dogNames[3][0]}`
 
 // console.log(initials)
 
