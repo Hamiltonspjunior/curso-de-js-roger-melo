@@ -14,7 +14,8 @@
 */
 
 const my3FavoriteTVShows = ['Breaking Bad', 'The Office', 'The end of the fucking world']
-const sentence = `Minhas 3 séries favoritas são: ${my3FavoriteTVShows.join(' e ').replace(' e ', ', ')}.`
+const sentence = `Minhas 3 séries favoritas são: ${my3FavoriteTVShows.join(' e ')
+  .replace(' e ', ', ')}.`
 
 // console.log(sentence)
 
@@ -72,7 +73,7 @@ const typeSentence = `O tipo de dado que a const "isRandomTVShowIncluded" armaze
 */
 const x = 39
 
-// console.log(`A string que a "typeSentence" armazena tem mais de ${x} caracteres? ${String(typeSentence.length > x)[0].toUpperCase()}${String(typeSentence.length > x).slice(1)}`)
+// console.log(`A string que a "typeSentence" armazena tem mais de ${x} caracteres? ${String(typeSentence.length > x).replace('t', 'T')}`)
 
 
 /*
@@ -87,7 +88,7 @@ const x = 39
 
 const falsyValues = [0, "", false, '', ``, null, undefined, NaN]
 
-// console.log(`Todos os ${falsyValues.length} itens do array "falsyValues" são falsy. Inclusive o ${Boolean(0)}.`)
+// console.log(`Todos os ${falsyValues.length} itens do array "falsyValues" são falsy. Inclusive o ${falsyValues[2]}.`)
 
 /*
   07 - Comente o console.log() acima e:
@@ -144,4 +145,4 @@ const isNotAString = typeof randomTVShow !== 'string'
 
 const evenNumbers = [0, 2, 4, 6, 8, 10]
 
-console.log( Boolean(evenNumbers.indexOf(8)) )
+console.log(evenNumbers.indexOf(8) !== -1)
