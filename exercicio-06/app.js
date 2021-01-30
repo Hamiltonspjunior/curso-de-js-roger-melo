@@ -25,7 +25,7 @@
 
 const fruits = ['morango', 'banana', 'mamão']
 
-if(fruits.includes('abacaxi')) {
+if (fruits.includes('abacaxi')) {
   console.log('A string "abacaxi" existe no array fruits.')
 } else if (fruits.includes('pera')) {
   console.log('A string "pera" existe no array fruits.')
@@ -46,11 +46,11 @@ if(fruits.includes('abacaxi')) {
   lógico precisam ter a constante especificada. Exemplo: hour > x && hour < y.
 */
 
-const hour = 17
-const isDay = hour >= 6 && hour < 12
+const hour = 15
+const isMorning = hour >= 6 && hour < 12
 const isAfternoon = hour >= 12 && hour < 18
 
-if(isDay) {
+if(isMorning) {
   console.log('Bom dia!')
 } else if (isAfternoon) {
   console.log('Boa tarde!')
@@ -125,9 +125,10 @@ let quantityOfNumbers = 0
 let quantityOfStrings = 0
 
 for(let i = 0; i < crazyArray.length; i++) {
-  const isItemABoolean = typeof crazyArray[i] === 'boolean'
-  const isItemANumber = typeof crazyArray[i] === 'number'
-  const isItemAString = typeof crazyArray[i] === 'string'
+  const typeOfItem = typeof crazyArray[i]
+  const isItemABoolean = typeOfItem === 'boolean'
+  const isItemANumber = typeOfItem === 'number'
+  const isItemAString = typeOfItem === 'string'
 
   if(isItemABoolean) {
     quantityOfBooleans++
@@ -162,22 +163,19 @@ console.log(`O crazyArray tem ${quantityOfBooleans} booleans, ${quantityOfNumber
 const randomNumbers = [73, 4, 67, 10, 31, 58]
 let oddNumbers = []
 let evenNumbers = []
-let setence = ''
 
 for(let i = 0; i < randomNumbers.length; i++) {
-  const isAnOddNumber = randomNumbers[i] % 2 === 1
+  const number = randomNumbers[i]
+  const isAnOddNumber = number % 2 === 1
 
   if (isAnOddNumber) {
-    oddNumbers.push(randomNumbers[i])
+    oddNumbers.push(number)
   } else {
-    evenNumbers.push(randomNumbers[i])
+    evenNumbers.push(number)
   }
 }
 
-sentence = `Numeros ímpares: XX, XX e XX. Números pares: XX, XX e XX.`
-  .replace('XX, XX e XX', `${oddNumbers.join(' e ')}`)
-  .replace('XX, XX e XX', `${evenNumbers.join(' e ')}`)
-  .replace('67,', '67 e')
-  .replace('10,', '10 e')
-  
-console.log(sentence)
+const oddNumbersString = oddNumbers.join(', ').replace('67,', '67 e')
+const evenNumbersString = evenNumbers.join(', ').replace('10,', '10 e')
+
+console.log(`Numeros ímpares: ${oddNumbersString}. Números pares: ${evenNumbersString}.`)
