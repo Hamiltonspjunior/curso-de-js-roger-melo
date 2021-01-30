@@ -84,10 +84,9 @@ for(let i = 0; i < cities.length; i++) {
 
 const names = ['João Grilo', 'Chicó', 'Rosinha']
 let HTMLTemplate = ''
-let i = 0
 
-while(i < names.length) {
-  HTMLTemplate += `<li>${names[i++]}</li>`
+for (let i = 0; i < names.length; i++) {
+  HTMLTemplate += `<li>${names[i]}</li>`
 }
 
 // console.log(HTMLTemplate)
