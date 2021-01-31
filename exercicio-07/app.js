@@ -5,7 +5,7 @@
   - O resultado exibido no console deve ser: false true.
 */
 
-console.log(true, false)
+console.log(!true, !false)
 
 /*
   02
@@ -17,6 +17,12 @@ console.log(true, false)
 */
 
 const animals = ['macaco', 'tucano', 'elefante', 'pavão', 'hipopótamo']
+
+if (!animals.includes('Leão')) {
+  console.log('Leão não existe no array animals.')
+} else {
+  console.log('Existe um leão no array animals.')
+}
 
 /*
   03
@@ -30,6 +36,16 @@ const animals = ['macaco', 'tucano', 'elefante', 'pavão', 'hipopótamo']
 */
 
 const randomNumbers = [59, 61, 73, 57, 35, 73, 21, 87, 43]
+let numbersSum = 0
+
+for(let i = 0; i < randomNumbers.length; i++) {
+  numbersSum += randomNumbers[i]
+
+  if (numbersSum > 400) {
+    console.log(`A soma ultrapassou 400. Até aqui, o valor atual é ${numbersSum}.`)
+    break
+  }
+}
 
 /*
   04
@@ -41,6 +57,19 @@ const randomNumbers = [59, 61, 73, 57, 35, 73, 21, 87, 43]
 */
 
 const sentence = ['A', 'certeza', 'dúvida', 'é', 'o', 'princípio', 'da', 'sabedoria.']
+let sentenceString = ''
+
+for (let i = 0; i < sentence.length; i++) {
+  const word = sentence[i]
+
+  if(word === 'certeza' ) {
+    continue
+  }
+
+  sentenceString += `${word} `
+}
+
+console.log(sentenceString)
 
 /*
   05
@@ -58,6 +87,35 @@ const sentence = ['A', 'certeza', 'dúvida', 'é', 'o', 'princípio', 'da', 'sab
 */
 
 const randomValues = [57, false, 'JS', [], true, 'HTML', 31, null, false, 'CSS', 97, true, 'Git', 11, 'sticker', false, 'GitHub', true, null]
+
+let first4Strings = []
+let amountBooleans = 0
+let amountIterations = 0
+
+for (let i = 0; i < randomValues.length; i++) {
+  const value = randomValues[i]
+  const isItemAString = typeof value === 'string'
+  const IsItemABoolean = typeof value === 'boolean'
+  
+  amountIterations++
+
+  if (isItemAString) {
+    first4Strings.push(value)
+  } else if (IsItemABoolean) {
+    amountBooleans++
+  }
+
+  if(first4Strings.length === 4) {
+    break
+  }
+}
+
+const first4StringsText = first4Strings.join(', ').replace('CSS,', 'CSS e')
+
+console.log(`3 informações sobre o array randomValues:
+- As primeiras 4 strings são ${first4StringsText};
+- Até que as primeiras 4 strings fossem iteradas, ${amountBooleans} booleans foram iterados;
+- O array foi iterado por ${amountIterations} vezes.`)
 
 /*
   06
@@ -79,7 +137,24 @@ const randomValues = [57, false, 'JS', [], true, 'HTML', 31, null, false, 'CSS',
     da bebida além da que você escolheu.
 */
 
-// const drinkType
+const drinkType = 'água'
+let message = ''
+
+switch (drinkType) {
+  case 'água':
+    message = 'Substância química cujas moléculas são formadas por dois átomos de hidrogênio e um de oxigênio.'
+    break
+  case 'refrigerante':
+    message = 'Bebida não alcoólica e não fermentada, fabricada industrialmente, à base de água mineral e açúcar.'
+    break
+  case 'suco':
+    message = 'Bebida produzida do líquido extraído de frutos.'
+    break
+  default:
+    message = 'Bebida desconhecida.'
+}
+
+console.log(message)
 
 /*
   07
@@ -89,7 +164,7 @@ const randomValues = [57, false, 'JS', [], true, 'HTML', 31, null, false, 'CSS',
     para testar o switch que você escreveu.
 */
 
-const a = 2
+const a = 1
 
 // if (a === 0) {
 //   console.log(`O valor de "a" é ${a}`)
@@ -98,3 +173,14 @@ const a = 2
 // } else {
 //   console.log('O valor de "a" é qualquer número, exceto 0 e 1')
 // }
+
+switch (a) {
+  case 0:
+    console.log(`O valor de "a" é ${a}`)
+    break
+  case 1:
+    console.log(`O valor de "a" é ${a}`)
+    break
+  default:
+    console.log('O valor de "a" é qualquer número, exceto 0 e 1')
+}
