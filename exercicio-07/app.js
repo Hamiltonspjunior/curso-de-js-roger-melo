@@ -37,12 +37,13 @@ if (!animals.includes('Leão')) {
 
 const randomNumbers = [59, 61, 73, 57, 35, 73, 21, 87, 43]
 let numbersSum = 0
+const limit = 400
 
 for(let i = 0; i < randomNumbers.length; i++) {
   numbersSum += randomNumbers[i]
 
-  if (numbersSum > 400) {
-    console.log(`A soma ultrapassou 400. Até aqui, o valor atual é ${numbersSum}.`)
+  if (numbersSum > limit) {
+    console.log(`A soma ultrapassou ${limit}. Até aqui, o valor atual é ${numbersSum}.`)
     break
   }
 }
@@ -62,7 +63,7 @@ let sentenceString = ''
 for (let i = 0; i < sentence.length; i++) {
   const word = sentence[i]
 
-  if(word === 'certeza' ) {
+  if(word === 'certeza') {
     continue
   }
 
@@ -86,36 +87,40 @@ console.log(sentenceString)
   "
 */
 
-const randomValues = [57, false, 'JS', [], true, 'HTML', 31, null, false, 'CSS', 97, true, 'Git', 11, 'sticker', false, 'GitHub', true, null]
+const randomValues = [57, false, 'JS', [], true, 'HTML', 31, null, false, 'CSS', 97, true, 'Java', 11, 'sticker', false, 'GitHub', true, null]
 
 let first4Strings = []
-let amountBooleans = 0
-let amountIterations = 0
+let booleansAmount = 0
+let totalIterations = 0
 
 for (let i = 0; i < randomValues.length; i++) {
   const value = randomValues[i]
-  const isItemAString = typeof value === 'string'
-  const IsItemABoolean = typeof value === 'boolean'
+  const typeOfValue = typeof value
+  const isItemAString = typeOfValue === 'string'
+  const IsItemABoolean = typeOfValue === 'boolean'
   
-  amountIterations++
-
-  if (isItemAString) {
-    first4Strings.push(value)
-  } else if (IsItemABoolean) {
-    amountBooleans++
-  }
-
   if(first4Strings.length === 4) {
     break
   }
+  
+  if (isItemAString) {
+    first4Strings.push(value)
+  } 
+  
+  if (IsItemABoolean) {
+    booleansAmount++
+  }
+  
+  totalIterations++
 }
 
-const first4StringsText = first4Strings.join(', ').replace('CSS,', 'CSS e')
+const lastItem = first4Strings[first4Strings.length - 1]
+const fourStrings = first4Strings.join(', ').replace(`, ${lastItem}`, ` e ${lastItem}`)
 
 console.log(`3 informações sobre o array randomValues:
-- As primeiras 4 strings são ${first4StringsText};
-- Até que as primeiras 4 strings fossem iteradas, ${amountBooleans} booleans foram iterados;
-- O array foi iterado por ${amountIterations} vezes.`)
+  - As primeiras 4 strings são ${fourStrings};
+  - Até que as primeiras 4 strings fossem iteradas, ${booleansAmount} booleans foram iterados;
+  - O array foi iterado por ${totalIterations} vezes.`)
 
 /*
   06
@@ -164,8 +169,8 @@ console.log(message)
     para testar o switch que você escreveu.
 */
 
-const a = 1
-
+const number = 1
+const numberMessage = 'O valor de "number" é'
 // if (a === 0) {
 //   console.log(`O valor de "a" é ${a}`)
 // } else if (a === 1) {
@@ -174,13 +179,13 @@ const a = 1
 //   console.log('O valor de "a" é qualquer número, exceto 0 e 1')
 // }
 
-switch (a) {
+switch (number) {
   case 0:
-    console.log(`O valor de "a" é ${a}`)
+    console.log(`${numberMessage} ${number}`)
     break
   case 1:
-    console.log(`O valor de "a" é ${a}`)
+    console.log(`${numberMessage} ${number}`)
     break
   default:
-    console.log('O valor de "a" é qualquer número, exceto 0 e 1')
+    console.log(`${numberMessage} qualquer número, exceto 0 e 1`)
 }
