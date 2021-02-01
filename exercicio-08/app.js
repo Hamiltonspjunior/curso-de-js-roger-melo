@@ -39,13 +39,15 @@ console.log(`O resultado é: ${divide(6, 2)}`)
   "Esta é a Xª vez que essa string é exibida."
 */
 
-function showValue (value = 1) {
-  return value
+function log (value = 'Você deve passar um valor como argumento') {
+  console.log(value)
 }
 
-// for (let i = 1; i <= 7; i++) {
-//   console.log(`Esta é a ${showValue(i)}ª vez que essa string é exibida.`)
-// }
+for (let i = 0; i < 7; i++) {
+  const counter = i + 1
+
+  log(`Esta é a ${counter}ª vez que essa string é exibida.`)
+}
 
 /*
   04
@@ -72,7 +74,9 @@ function wordsToUpperCase (words = []) {
   return wordsInUpperCase
 }
 
-console.log(wordsToUpperCase(millennialWords))
+const millennialWordsInUpperCase = wordsToUpperCase(millennialWords)
+
+log(millennialWordsInUpperCase)
 
 /*
   05
@@ -91,13 +95,12 @@ const totalNumbers = randomNumbers.length
 let positiveNumbers = 0
 let negativeNumbers = 0
 
-function isPositive (number) {
+function isPositive (number = 0) {
   return number > 0
 }
 
 for (let i = 0; i < randomNumbers.length; i++) {
-  const number = randomNumbers[i]
-  const isNumberPositive = isPositive(number)
+  const isNumberPositive = isPositive(randomNumbers[i])
   
   if (isNumberPositive) {
     positiveNumbers++
@@ -118,7 +121,7 @@ console.log(`O array "randomNumbers" possui ${totalNumbers} números, sendo ${po
     função.
 */
 
-function getOddNumbers (numbers) {
+function getOddNumbers (numbers = []) {
   let oddNumbers = []
 
   for (let i = 0; i < numbers.length; i++) {
