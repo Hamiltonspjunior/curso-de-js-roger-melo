@@ -50,7 +50,7 @@ console.log(cat.age)
     adicionado.
 */
 
-const addCatFriend = name => cat.bestFriends.push(name)
+const addCatFriend = friend => cat.bestFriends.push(friend)
 
 addCatFriend('SnowBell')
 
@@ -65,11 +65,15 @@ console.log(cat.bestFriends)
     colchetes.
 */
 
-const addNewColorToCat = color => cat['secondColor'] = color
+const changeColor = object => {
+  object['color'] += ' and black'
+}
 
-addNewColorToCat('black')
+changeColor(cat)
 
-console.log(cat['secondColor'])
+const colorProperty = 'color'
+
+console.log(cat[colorProperty])
 
 /*
   06
@@ -98,14 +102,14 @@ let dog = {
   age: 5,
   color: 'Gold',
   bestFriends: ['Costelinha', 'Logan'],
-  sound: function () {
-    return 'au-au'
-  }
+  sound: () => 'au-au'
 }
 
-const sumResult = cat.age + dog.age
+const getAgeMessage = (cat, dog) => `A soma das idades de ${cat.name} e ${dog.name} é ${cat.age + dog.age}."`
 
-console.log(`A soma das idades de ${cat.name} e ${dog.name} é ${sumResult}."`)
+const messageAge = getAgeMessage(cat, dog)
+
+console.log(messageAge)
 
 /*
   08
@@ -115,12 +119,12 @@ console.log(`A soma das idades de ${cat.name} e ${dog.name} é ${sumResult}."`)
   - Como você refatoraria esta função?
 */
 
-const isAnSUV = car => {
-  const SUVCars = ['Honda HR-V', 'Jeep Renegade', 'Ford EcoSport', 'Hyundai iX35']
-  const isSUV = SUVCars.includes(car)
-
-  return isSUV
-}
+const isAnSUV = car =>  [
+  'Honda HR-V', 
+  'Jeep Renegade', 
+  'Ford EcoSport', 
+  'Hyundai iX35'
+].includes(car)
 
 console.log(isAnSUV('Honda Civic'))
 console.log(isAnSUV('Ford EcoSport'))
@@ -139,13 +143,11 @@ console.log(isAnSUV('Ford EcoSport'))
 */
 
 const typeDescription = type => {
-  let types = {
+  return {
     null: 'Seta, explicitamente, uma variável sem valor.',
     undefined: 'Representa um valor não-setado.',
     object: 'Arrays, Datas, Objetos literais, Funções, etc.'
-  }
-
-  return types[type]
+  }[type]
 }
 
 console.log(typeDescription(null))
