@@ -74,7 +74,7 @@ let car = {
 */
 
 console.log(car.run())
-console.log(car.isRunning)
+console.log(car.isRunning === true)
 
 /*
   05
@@ -83,7 +83,7 @@ console.log(car.isRunning)
 */
 
 console.log(car.stop())
-console.log(car.isRunning)
+console.log(car.isRunning === false)
 
 /*
   06
