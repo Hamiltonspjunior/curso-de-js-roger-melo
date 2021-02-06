@@ -27,11 +27,14 @@ const best2019Movies = [
   { title: 'A Vida Invisível', directedBy: 'Karim Aïnouz' }
 ]
 
-let sentence = 'Segundo o site Omelete, os melhores filmes de 2019 são:\n'
+let sentence = 'Segundo o site Omelete, os melhores filmes de 2019 são:'
 
-best2019Movies.forEach(movie => {
-    sentence += `  - ${movie.title}, dirigido por ${movie.directedBy}\n`
-})
+const generateMovieMessage = movie => {
+  sentence += `
+  - ${movie.title}, dirigido por ${movie.directedBy}`
+}
+
+best2019Movies.forEach(generateMovieMessage)
 
 console.log(sentence)
 
@@ -71,7 +74,7 @@ const youtubeUser = {
   logRecentVideos () {
     const recentVideos = this.videos.recentVideos
 
-    console.log('Vídeos recentes de Roger Melo:')
+    console.log(`Vídeos recentes de ${this.name}:`)
 
     recentVideos.forEach(video => {
       console.log(video.title)
@@ -108,7 +111,7 @@ console.log(Math.ceil(firstNumber))
 
 const secondNumber = 3.5
 
-console.log(Math.round(3.5))
+console.log(Math.round(secondNumber))
 
 /*
   06
