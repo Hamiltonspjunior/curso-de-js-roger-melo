@@ -17,10 +17,13 @@ h1.innerText = h1.innerText.toUpperCase()
 */
 
 const numbers = [ 53, 24, 3, 8, 1, 6, 57, 80, 77, 98, 55 ]
-
 const ul = document.querySelector('.numbers')
 
-numbers.forEach(number => ul.innerHTML += `<li class="number">${number}</li>`)
+const insertNumberIntoUl = number => {
+  ul.innerHTML += `<li class="number">${number}</li>`
+}
+
+numbers.forEach(insertNumberIntoUl)
 
 /*
   03
@@ -29,17 +32,20 @@ numbers.forEach(number => ul.innerHTML += `<li class="number">${number}</li>`)
     - Se o número é par, ele deve ser exibido na cor "lightblue";
     - Se o número é ímpar, exiba-o na cor "pink".
 */
-const lis = document.querySelectorAll('li')
+const lis = document.querySelectorAll('.number')
 
-lis.forEach(li => {
+const changeLiColor = li => {
   const isEven = Number(li.innerText) % 2 === 0
 
   if (isEven) {
     li.style.color = 'lightblue'
-  } else {
-    li.style.color = 'pink'
-  }
-})
+    return
+  } 
+  
+  li.style.color = 'pink'
+}
+
+lis.forEach(changeLiColor)
 
 /*
   04
