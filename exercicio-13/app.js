@@ -12,9 +12,13 @@ const getCatInfo = () => {
   const name = 'Marcos'
   let age = 3
   const color = 'Cinza'
+
+  return { name, age, color }
 }
 
-// console.log()
+const { name, age, color } = getCatInfo()
+
+console.log(`${name} é um gato ${age} de ${color} anos.`)
 
 /*
   02
@@ -31,10 +35,8 @@ const external = () => {
     const extraInternal = () => {
       console.log(movie.toUpperCase())
     }
-
     extraInternal()
   }
-
   internal()
 }
 
@@ -51,7 +53,9 @@ external()
 
 let randomNumbers = [3, 2, 1]
 
-console.log(randomNumbers.reverse())
+randomNumbers.reverse()
+
+console.log(randomNumbers)
 
 /*
   04
@@ -88,7 +92,7 @@ const dogs = [
   { name: 'Xica', age: 6, gender: 'Female', breed: 'Chihuahua' }
 ]
 
-const zequinha = dogs.find(item => item.name === 'Zequinha')
+const zequinha = dogs.find(dog => dog.name === 'Zequinha')
 
 console.log(zequinha)
 
