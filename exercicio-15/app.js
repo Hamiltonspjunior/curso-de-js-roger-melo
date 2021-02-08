@@ -7,14 +7,15 @@
 */
 
 const ul = document.querySelector('.videos')
-const ulChildren = Array.from(ul.children)
+const lis = Array.from(ul.children)
 
-const addClassIntoElement = element => {
-  element.classList.add('video')
-  console.log(element)
+const addVideoClass = li => {
+  li.classList.add('video')
 }
 
-ulChildren.forEach(addClassIntoElement)
+lis.forEach(addVideoClass)
+
+console.log(lis)
 
 /*
   02
@@ -52,15 +53,15 @@ console.log(ul.previousElementSibling)
     exibida no console.
 */
 
-const lis = document.querySelectorAll('li')
-
-const logLiClicked = li => {
-  li.addEventListener('click', event => {
-    console.log(event.target)
-  })
+const showClickedLi = event => {
+  console.log(event.target)
 }
 
-lis.forEach(logLiClicked)
+const addClickedEvent = li => {
+  li.addEventListener('click', showClickedLi)
+}
+
+lis.forEach(addClickedEvent)
 
 /*
   06
@@ -80,19 +81,21 @@ const videos = [{
   length: '00:02:55'
 }]
 
-const button = document.querySelector('button')
-
-const addVideoIntoList = video => {
+const insertVideoLi = ({ name }) => {
   const li = document.createElement('li')
 
-  li.textContent = video.name
+  li.textContent = name
 
   ul.append(li)
 }
 
-button.addEventListener('click', () => {
-  videos.forEach(addVideoIntoList)
-})
+const handleClickButton = () => {
+  videos.forEach(insertVideoLi)
+}
+
+const button = document.querySelector('button')
+
+button.addEventListener('click', handleClickButton)
 
 /*
   07
@@ -101,13 +104,8 @@ button.addEventListener('click', () => {
     sejam removidos.
 */
 
+const body = document.body
+
 h1.addEventListener('click', () => {
-  const body = document.body
-  const bodyChildren = Array.from(body.children)
-
-  const removeDOMElement = element => {
-    element.remove()
-  }
-
-  bodyChildren.forEach(removeDOMElement)
+  body.innerHTML = ''
 })
