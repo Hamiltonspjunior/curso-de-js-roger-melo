@@ -8,18 +8,36 @@
 const div = document.querySelector('div')
 const elementsInsideDiv = Array.from(div.children)
 const h2 = document.querySelector('h2')
+const egg = document.querySelector('.egg')
+const button = document.querySelector('button')
 
-elementsInsideDiv.forEach(element => {
-  element.addEventListener('click', event => {
-    const tagNameOfClickedElement = event.target.tagName.toLowerCase()
-    event.stopPropagation()
-    h2.textContent = `Clicou no ${tagNameOfClickedElement}, filho da div.`
-  })
-})
+const showClickElement = ({target}) => {
+  const clickedElementName = target.tagName.toLowerCase()
 
-div.addEventListener('click', () => {
-  h2.textContent = 'Clicou na div.'
-})
+  if (clickedElementName === 'div') {
+    h2.textContent = 'Clicou na div.'
+    return
+  }
+
+  h2.textContent = `Clicou no ${clickedElementName}, filho da div.`
+}
+
+const logCopyMessage = () => {
+  console.log('Texto copiado!')
+}
+
+const showCoordinates = ({offsetX, offsetY}) => {
+  egg.textContent = `Eixo X: ${offsetX} | Eixo Y: ${offsetY}`
+}
+
+const changeEggColor = () => {
+  egg.style.background = 'lightgoldenrodyellow'
+}
+
+div.addEventListener('click', showClickElement)
+h2.addEventListener('copy', logCopyMessage)
+egg.addEventListener('mousemove', showCoordinates)
+button.addEventListener('click', changeEggColor)
 
 /*
   02
@@ -44,10 +62,6 @@ div.addEventListener('click', () => {
     seja exibida no console.
 */
 
-h2.addEventListener('copy', () => {
-  console.log('Texto copiado!')
-})
-
 /*
   05
 
@@ -56,30 +70,12 @@ h2.addEventListener('copy', () => {
     "Eixo X: COORDENADA_EIXO_X | Eixo Y: COORDENADA_EIXO_Y".
 */
 
-const egg = document.querySelector('.egg')
-
-const changeEggTextForXandYCoordinates = event => {
-  const xCoordinate = event.offsetX
-  const yCoordinate = event.offsetY
-
-  egg.textContent = `Eixo X: ${xCoordinate} | Eixo Y: ${yCoordinate}`
-}
-
-egg.addEventListener('mousemove', changeEggTextForXandYCoordinates)
-
 /*
   06
 
   - Modifique a cor do ovo para "lightgoldenrodyellow" quando o botão for 
     clicado.
 */
-const button = document.querySelector('button')
-
-const changeEggColor = event => {
-  egg.style.background = 'lightgoldenrodyellow'
-}
-
-button.addEventListener('click', changeEggColor)
 
 /*
   07
@@ -102,9 +98,9 @@ const people = [
   { id: 9, name: 'Hamilton Silva', profession: 'Advogado' }
 ]
 
-const haveFrontEndDeveloper = people.some(({profession}) => 
+const isSomePersonFrontendDeveloper = people.some(({profession}) => 
   profession === 'Front-end developer')
 
-if (haveFrontEndDeveloper) {
+if (isSomePersonFrontendDeveloper) {
   console.log('O array people contém, no mínimo, um(a) Front-end developer.')
 }
