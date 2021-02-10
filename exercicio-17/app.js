@@ -4,23 +4,33 @@
   - No envio do form, faça com que a página não seja recarregada.
 */
 const form = document.querySelector('form')
-const inputRegex = /^[a-zA-Z0-9]{7,11}$/
 
-form.addEventListener('submit', event => {
-  const inputValue = event.target.input.value
-  const inputResult = inputRegex.test(inputValue)
-  
+const clearInput = () => {
+  input.value = ''
+  input.focus()
+}
+
+const logMessage = message => {
+  console.log(message)
+  clearInput()
+}
+
+const handleSubmit = event => {
   event.preventDefault()
 
-  console.log(inputValue)
+  const input = event.target.input
+  const regex = /^[a-zA-Z0-9]{7,11}$/
+  const isAValidValue = regex.test(input.value)
 
-  if (inputResult) {
-    console.log('O valor inserido no input é válido =)')
+  if (isAValidValue) {
+    logMessage('O valor inserido no input é válido =)')
     return 
   }
 
-  console.log('"Valor inválido =(')
-})
+  logMessage('"Valor inválido =(')
+}
+
+form.addEventListener('submit', handleSubmit)
 
 /*
   02
@@ -38,9 +48,9 @@ form.addEventListener('submit', event => {
     index.html;
   - Exiba no console o boolean no qual este teste resulta.
 */
-const paragraphText = document.querySelector('p').innerText
+const p = document.querySelector('p')
 const patern = /documentation/
-const isAMatch = patern.test(paragraphText)
+const isAMatch = patern.test(p.textContent)
 
 console.log(isAMatch)
 /*
