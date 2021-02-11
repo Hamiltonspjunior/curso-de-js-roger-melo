@@ -21,6 +21,47 @@
   Dica: pesquise pelo método "insertAdjacentElement", no MDN;
 */
 
+const form = document.querySelector('form')
+const input = form.username
+const feedback = document.createElement('P')
+
+input.insertAdjacentElement('afterend', feedback)
+
+const testUsername = username => /^[a-zA-Z]{6,}$/.test(username)
+
+const updateUserFeedback = (feedbackClass, message) => {
+  feedback.setAttribute('class', feedbackClass)
+
+  feedback.textContent = message
+}
+
+const handleKeyup = () => {
+  const isAValideUsername = testUsername(input.value)
+
+  if (isAValideUsername) {
+    updateUserFeedback('username-success-feedback', 'Username válido =)')
+    return
+  }
+
+  updateUserFeedback('username-help-feedback', 'O valor deve conter no mínimo 6 caracteres, com apenas letras maiúsculas e/ou minúsculas')
+}
+
+const handleSubmit = event => {
+  event.preventDefault()
+
+  const isAValideUsername = testUsername(input.value)
+
+  if (isAValideUsername) {
+    updateUserFeedback('submit-success-feedback', 'Dados enviados =)')
+    return
+  }
+
+  updateUserFeedback('submit-help-feedback', 'Por favor, insira um username válido')
+}
+
+form.addEventListener('keyup', handleKeyup)
+form.addEventListener('submit', handleSubmit)
+
 /*
   02
 
@@ -53,3 +94,16 @@
   Spoiler alert: este tipo de exercício será frequente em etapas mais avançadas  
   do curso, onde falaremos sobre TDD. Vá se aquecendo =D
 */
+
+const some = (array, callback) => {
+  for (let i = 0; i < array.length; i++) {
+    if (callback(array[i])) {
+      return true
+    }
+  }
+
+  return false
+}
+
+console.log(some([1, 2, 3], item => item > 2))
+console.log(some([1, 3, 5], item => item === 0))
