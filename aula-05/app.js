@@ -17,6 +17,7 @@ while(j < 5) {
 
 /*
    RESUMO
-      - Controle de fluxo servem para decidirmos como o fluxo do nosso código deve seguir dada diferentes situações
-      - Loops são usados para repetir a mesma execução de código várias vezes
+      Controle de fluxo servem para decidirmos como o fluxo do nosso código deve seguir dada diferentes situações
+      Loops são usados para repetir a mesma execução de código várias vezes
+      Duas estruturas de loop comum são o for e o while
 */
