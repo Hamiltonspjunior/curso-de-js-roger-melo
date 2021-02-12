@@ -21,46 +21,90 @@
   Dica: pesquise pelo método "insertAdjacentElement", no MDN;
 */
 
+const inputUsername = document.querySelector('#username')
 const form = document.querySelector('form')
-const input = form.username
-const feedback = document.createElement('P')
+const button = document.querySelector('.button')
 
-input.insertAdjacentElement('afterend', feedback)
+const paragraphUsernameFeedback = document.createElement('P')
+const paragraphSubmitFeedback = document.createElement('P')
 
-const testUsername = username => /^[a-zA-Z]{6,}$/.test(username)
+paragraphSubmitFeedback.setAttribute('data-feedback', 'submit-feedback')
 
-const updateUserFeedback = (feedbackClass, message) => {
-  feedback.setAttribute('class', feedbackClass)
-
-  feedback.textContent = message
+const invalidSubmitInfo = {
+  paragraph: paragraphSubmitFeedback, 
+  text: 'Por favor, insira um username válido', 
+  className: 'submit-help-feedback', 
+  previousSibling: button
 }
 
-const handleKeyup = () => {
-  const isAValideUsername = testUsername(input.value)
+const validSubmitInfo = {
+  paragraph: paragraphSubmitFeedback, 
+  text: 'Dados enviados =)', 
+  className: 'submit-success-feedback', 
+  previousSibling: button
+}
 
-  if (isAValideUsername) {
-    updateUserFeedback('username-success-feedback', 'Username válido =)')
+const invalidUsernameInfo = {
+  paragraph: paragraphUsernameFeedback, 
+  text: 'O valor deve conter no mínimo 6 caracteres, com apenas letras maiúsculas e/ou minúsculas', 
+  className: 'username-help-feedback', 
+  previousSibling: inputUsername
+}
+
+const validUsernameInfo = {
+  paragraph: paragraphUsernameFeedback, 
+  text: 'Username válido =)', 
+  className: 'username-success-feedback', 
+  previousSibling: inputUsername
+}
+
+const testUsername = inputValue => /^[a-zA-z]{6,}$/.test(inputValue)
+
+const insertParagraphIntoDOM = (paragraphInfo) => {
+  const { paragraph, text, className, previousSibling } = paragraphInfo
+
+  paragraph.textContent = text
+  paragraph.setAttribute('class', className)
+  previousSibling.insertAdjacentElement('afterend', paragraph)
+}
+
+const removeSubimitParagraph = () => {
+  const paragraphSubmitFeedbackExist = document.
+    querySelector('[data-feedback="submit-feedback"]')
+
+  if (paragraphSubmitFeedbackExist) {
+    paragraphSubmitFeedbackExist.remove()
+  }
+}
+
+const showUsernameInfo = event => {
+  const isUsernameValid = testUsername(event.target.value)
+
+  removeSubimitParagraph()
+
+  if (!isUsernameValid) {
+    insertParagraphIntoDOM(invalidUsernameInfo)
     return
   }
 
-  updateUserFeedback('username-help-feedback', 'O valor deve conter no mínimo 6 caracteres, com apenas letras maiúsculas e/ou minúsculas')
+  insertParagraphIntoDOM(validUsernameInfo)
 }
 
-const handleSubmit = event => {
+const showSubmitInfo = event => {
   event.preventDefault()
 
-  const isAValideUsername = testUsername(input.value)
+  const isUsernameValid = testUsername(inputUsername.value)
 
-  if (isAValideUsername) {
-    updateUserFeedback('submit-success-feedback', 'Dados enviados =)')
+  if (!isUsernameValid) {
+    insertParagraphIntoDOM(invalidSubmitInfo)
     return
   }
 
-  updateUserFeedback('submit-help-feedback', 'Por favor, insira um username válido')
+  insertParagraphIntoDOM(validSubmitInfo)
 }
 
-form.addEventListener('keyup', handleKeyup)
-form.addEventListener('submit', handleSubmit)
+inputUsername.addEventListener('input', showUsernameInfo)
+form.addEventListener('submit', showSubmitInfo)
 
 /*
   02
