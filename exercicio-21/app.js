@@ -7,9 +7,9 @@
 
 const randomNumbers = [10, 30, 15, 25, 50, 40, 5]
 
-const isOddNumber = number => number % 2 !== 0
+const getOddNumbers = number => number % 2 === 1
 
-const oddNumbers = randomNumbers.filter(isOddNumber)
+const oddNumbers = randomNumbers.filter(getOddNumbers)
 
 console.log(oddNumbers)
 
@@ -21,17 +21,12 @@ console.log(oddNumbers)
 
 const crazyNumbers = [937, 5, 395, 402, 501, 333, 502, 781, 3, 691]
 
-const getNumbersBelow501Amount = (accumulator, number) => {
-  if (number < 501) {
-    accumulator++
-  }
+const countNumbersLessThan501 = (accumulator, number) => 
+  number < 501 ? ++accumulator : accumulator
 
-  return accumulator
-}
+const numbersLessThan501 = crazyNumbers.reduce(countNumbersLessThan501, 0)
 
-const numbersBelow501Amount = crazyNumbers.reduce(getNumbersBelow501Amount, 0)
-
-console.log(numbersBelow501Amount)
+console.log(numbersLessThan501)
 
 /*
   03
@@ -42,9 +37,7 @@ console.log(numbersBelow501Amount)
 
 const numbers = [5, 7, 3]
 
-const squareTheNumbers = number => number ** 2
-
-const squaredNumbers = numbers.map(squareTheNumbers)
+const squaredNumbers = numbers.map(number => number ** 2)
 
 console.log(squaredNumbers)
 
@@ -73,15 +66,10 @@ const cart = [
   - Nome 3
 */
 
-const getCartList = (accumulator, item) => {
-  accumulator += `- ${item.name}\n`
+const productList = cart.reduce((accumulator, { name }) => 
+`${accumulator}- ${name}\n`, '')
 
-  return accumulator
-}
-
-const cartList = cart.reduce(getCartList, '')
-
-console.log(cartList)
+console.log(productList)
 
 /*
   05
@@ -104,12 +92,10 @@ const tarantinoMovies = [
   { name: 'Kill Bill: Volume 1', release: 2003 }
 ]
 
-const isReleasedBefore200 = movie => movie.release < 2000
-
-const moviesReleasedBefor2000 = tarantinoMovies.filter(isReleasedBefore200)
+const moviesBefor2000 = tarantinoMovies.filter(({ release }) => release < 2000)
 
 
-console.log(moviesReleasedBefor2000)
+console.log(moviesBefor2000)
 
 /*
   06
@@ -128,7 +114,7 @@ const tvShows = [
   { name: 'Watchmen', releaseYear: 2019 }
 ]
 
-const tvShowsNames = tvShows.map(tvShow => tvShow.name)
+const tvShowsNames = tvShows.map(({ name }) => name)
 
 console.log(tvShowsNames)
 
