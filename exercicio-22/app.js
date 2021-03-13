@@ -6,15 +6,12 @@
   - Exiba o array ordenado no console.
 */
 
+const getArrayCopy = array => array.map(item => item)
+
 const names = ['Caio', 'André', 'Dário']
+const namesInAlphabeticOrder = getArrayCopy(names).sort()
 
-const copyNames = name => name
-
-const orderedNames = names
-  .map(copyNames)
-  .sort()
-
-console.log(orderedNames)
+console.log(namesInAlphabeticOrder)
 
 /*
   02
@@ -31,15 +28,11 @@ const characters = [
   { id: 04, name: 'Mufasa' }
 ]
 
-const copyCharacters = character => character
+const charactersOrderedById = characters
+  .map(({ id, name }) => ({ id, name }))
+  .sort((item2, item1) => item2.id - item1.id)
 
-const charactersByAscendingOrder = (character1, character2) => character1.id - character2.id
-
-const orderedCharacters = characters
-  .map(copyCharacters)
-  .sort(charactersByAscendingOrder)
-
-console.log(orderedCharacters)
+console.log(charactersOrderedById)
 
 /*
   03
@@ -50,16 +43,10 @@ console.log(orderedCharacters)
 */
 
 const numbers = [41, 15, 63, 349, 25, 22, 143, 64, 59, 291]
+const numbersInAscendingOrder = getArrayCopy(numbers)
+  .sort((item2, item1) => item2 - item1)
 
-const copyNumbers = number => number
-
-const numbersbyAscendingOrder = (number1, number2) => number1 - number2
-
-const orderedNumbers = numbers
-  .map(copyNumbers)
-  .sort(numbersbyAscendingOrder)
-
-console.log(orderedNumbers)
+console.log(numbersInAscendingOrder)
 
 /*
   04
@@ -68,10 +55,7 @@ console.log(orderedNumbers)
 */
 
 const randomNumbers = [10, 5, 0, 40, 60, 10, 20, 70]
-
-const isNumberGreaterThan50 = randomNumber => randomNumber > 50
-
-const numberGreaterThan50 = randomNumbers.find(isNumberGreaterThan50)
+const numberGreaterThan50 = randomNumbers.find(number => number > 50)
 
 console.log(numberGreaterThan50)
 
@@ -84,24 +68,9 @@ console.log(numberGreaterThan50)
 */
 
 const people = ['Cauã', 'Alfredo', 'Bruno']
+const peopleInReverseAlphabeticOrder = getArrayCopy(people).sort().reverse()
 
-const copyEachPerson = person => person
-
-const byZToA = (person1, person2) => {
-  if (person1 > person2) {
-    return -1
-  } else if (person2 > person1) {
-    return 1
-  }
-
-  return 0
-}
-
-const orderedPeople = people
-  .map(copyEachPerson)
-  .sort(byZToA)
-
-console.log(orderedPeople)
+console.log({people, peopleInReverseAlphabeticOrder})
 
 /*
   06
@@ -113,11 +82,15 @@ console.log(orderedPeople)
 
 const ingredients = ['vinho', 'tomate', 'cebola', 'cogumelo']
 
-let ingredientsMessage = ingredients
-  .map(ingredient => `${ingredient} cozido`)
-  .join(', ')
+const coockedIngredients = ingredients.reduce((acc, item, index, array) => {
+  const correctWordGender = /a$/.test(item) ? 'cozida' : 'cozido'
+  const isLastItem = index === array.length - 1
+  const ingredientsMessage = acc += `${item} ${correctWordGender}`
 
-console.log(ingredientsMessage)
+  return isLastItem ? ingredientsMessage : `${ingredientsMessage}, `
+}, '')
+
+console.log(coockedIngredients)
 
 /*
   07
@@ -139,16 +112,11 @@ const topBrazilmovies = [
   { title: 'Dona Flor e Seus Dois Maridos', peopleAmount: 10735524, distributedBy: 'Embrafilme' }
 ]
 
-const isDistributeByDisney = topBrazilmovie => topBrazilmovie.distributedBy === 'Disney'
+const peopleAmount = topBrazilmovies
+  .filter(({ distributedBy }) => distributedBy === 'Disney')
+  .reduce((acc, { peopleAmount }) => acc + peopleAmount, 0)
 
-const calculateDisneyPeopleAmount = (accumulator, topBrazilmovie) => 
-  accumulator += topBrazilmovie.peopleAmount
-
-const totalDisnyAudience = topBrazilmovies
-  .filter(isDistributeByDisney)
-  .reduce(calculateDisneyPeopleAmount, 0)
-
-console.log(totalDisnyAudience)
+console.log(peopleAmount)
 
 /*
   08
@@ -170,17 +138,11 @@ const pets = [
   { name: 'Chico', age: 6, gender: 'Male', type: 'Dog' }
 ]
 
-const isDog = ({type}) => type === 'Dog'
+const dogsInHumanAge = pets
+  .filter(({ type }) => type === 'Dog')
+  .map(({ name, age, gender, type }) => ({ name, age: age * 7, gender, type }))
 
-const getDogsWithHumanAge = ({name, age, gender, type}) => {
-  return { name: name, age: age * 7, gender: gender, type: type }
-}
-
-const dogs = pets
-  .filter(isDog)
-  .map(getDogsWithHumanAge)
-
-console.log(dogs)
+console.log(dogsInHumanAge)
 
 /*
   09
@@ -189,14 +151,12 @@ console.log(dogs)
     os nomes dos filmes na ul do index.html.
 */
 
-const movieListEl = document.querySelector('.list-group')
+const ul = document.querySelector('.list-group')
 
-const generateLiMovies = (accumulator, { title }) => 
-  accumulator += `<li>${title}</li>`
+const moviesNames = topBrazilmovies
+  .reduce((acc, { title }) => acc + `<li>${title}</li>`, '')
 
-const lis = topBrazilmovies.reduce(generateLiMovies, '')
-
-movieListEl.innerHTML = lis
+ul.innerHTML = moviesNames
 
 /*
   10
