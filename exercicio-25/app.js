@@ -74,13 +74,9 @@ console.log(future)
   - Exiba no console a quantidade de dias entre o momento futuro e o passado.
 */
 
-const diference = future.getTime() - past.getTime()
-const seconds = Math.round(diference / 1000)
-const minutes = Math.round(seconds / 60)
-const hours = Math.round(minutes / 60)
-const days = Math.round(hours / 24)
-
-console.log(days)
+const difference = future.getTime() - past.getTime()
+const differenceInDays = Math.round(difference / 1000 / 60 / 60 / 24)
+console.log(differenceInDays)
 
 /*
   08
