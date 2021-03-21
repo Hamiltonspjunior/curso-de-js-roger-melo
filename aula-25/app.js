@@ -49,19 +49,16 @@ const timestamp = 1616287551501
 console.log(new Date(timestamp))
 
 /* RESUMO:  
-  - Em JS datas são um tipo de objeto
-  - O JS disponibiliza um construtor Date() para se trabalhar com datas
-  - Sempre que uma data é criada ela representa o momento atual em que o arquivo 
-  foi lido, ou seja, o presente
-  - O Objeto Date possui diversos métodos para conseguirmos capturar o ano, dia, 
-  mes, e horas atuais
-  - O método getMonth é zero based, isso significa que Janeiro é o mês 0 e assim 
-  por diante
-  - O método getDay também é zero based, Domingo é o dia 0
-  - Timestamps represeta o número de milisegundos passados desde 01 de janeiro 
-  de 1970 até o momento atual
-  - Timestamps são úteis para fazer comparações de datas
-  - É possível passar uma data para o construtor Date para representar datas 
-  passadas ou futuras
-
+- Em JS datas são um tipo de objeto, ou seja, são tipos de referência
+- O JS disponibiliza um construtor Date() para se trabalhar com datas
+- Sempre que uma data é criada ela representa o momento atual em que o arquivo foi lido, ou seja, o presente
+- O Objeto Date possui diversos métodos para conseguirmos capturar o ano, dia, mes, e horas atuais
+- O método getMonth é zero based, isso significa que Janeiro é o mês 0 e assim por diante
+- O método getDay também é zero based, Domingo é o dia 0
+- Timestamps represeta o número de milisegundos passados desde 01 de janeiro de 1970 até o momento atual
+- O méto getTime() retorna o timestamp da data com a qual se está trabalhando
+- Timestamps são úteis para fazer comparações de datas
+- É possível passar uma data para o construtor Date para representar datas passadas ou futuras
+- É possível passar um timestamp para o construtor Date e ele retornará a data daquele timestamp
+- É possível comparar dois timestamps para calcular a diferença entre datas.
 */
