@@ -6,6 +6,20 @@
   - Não utilize a date-fns.
 */
 
+const present = new Date()
+
+const formatTimeUnit = unit => String(unit).length === 1 ? `0${unit}` : unit
+
+const formatDate = date => {
+  const day = formatTimeUnit(date.getDate())
+  const month = formatTimeUnit(date.getMonth() + 1)
+  const year = date.getFullYear()
+
+  return `${day}/${month}/${year}`
+}
+
+console.log(formatDate(present))
+
 /*
   02
 
@@ -13,6 +27,43 @@
     data na formatação: "03:07 - domingo, 7 de junho de 2020";
   - Não utilize a date-fns.
 */
+
+const weekDays = [
+  'Domingo', 
+  'Segunda-feira',
+  'Terça-feira',
+  'Quarta-feira',
+  'Quinta-feira',
+  'Sexta-feira',
+  'Sábado'
+]
+
+const monthNames = [
+  'Janeiro',
+  'Fevereiro',
+  'Março',
+  'Abril',
+  'Maio',
+  'Junho',
+  'Julho',
+  'Agosto',
+  'Setembro',
+  'Outubro',
+  'Dezembro'
+]
+
+const formatDateInfo = date => {
+  const hours = formatTimeUnit(date.getHours())
+  const minutes = formatTimeUnit(date.getMinutes())
+  const weekDay = weekDays[date.getDay()]
+  const monthDay = date.getDate()
+  const month = monthNames[date.getMonth()]
+  const year = date.getFullYear()
+
+  return `${hours}:${minutes} - ${weekDay}, ${monthDay} de ${month} de ${year}`
+}
+
+console.log(formatDateInfo(present))
 
 /*
   03
@@ -23,6 +74,9 @@
 */
 
 const user = { id: 42, isVerified: true }
+const {id, isVerified} = user
+
+console.log(id, isVerified)
 
 /*
   04
@@ -37,6 +91,11 @@ const user = { id: 42, isVerified: true }
 const robotA = { name: 'Bender' }
 const robotB = { name: 'HAL 9000' }
 
+const {name: nameA} = robotA
+const {name: nameB} = robotB
+
+console.log(nameA, nameB)
+
 /*
   05
 
@@ -50,6 +109,9 @@ const a = 'a'
 const b = 'b'
 const c = 'c'
 
+const obj = { a, b, c }
+console.log(obj)
+
 /*
   06
 
@@ -60,20 +122,12 @@ const useDataSomewhereElse = value => {
   console.log(value)
 }
 
-const updateSomething = (data = {}) => {
-  const target = data.target
-  const property = data.property
-  let willChange = data.willChange
-
+const updateSomething = ({target, property, willChange} = {}) => {
   if (willChange === 'valor indesejado') {
     willChange = 'valor desejado'
   }
 
-  useDataSomewhereElse({
-    target: target,
-    property: property,
-    willChange: willChange
-  })
+  useDataSomewhereElse({ target, property, willChange })
 }
 
 updateSomething({ target: '1', property: '2', willChange: 'valor indesejado' })
@@ -87,19 +141,19 @@ updateSomething({ target: '1', property: '2', willChange: 'valor indesejado' })
 
 const clockContainer = document.querySelector('.clock-container')
 
+const getClockHTML = (hours, minutes, seconds) => `
+  <span>${hours}</span> :
+  <span>${minutes}</span> :
+  <span>${seconds}</span>
+`
+
 const updateClock = () => {
   const present = new Date()
-  const hours = present.getHours()
-  const minutes = present.getMinutes()
-  const seconds = present.getSeconds()
+  const hours = formatTimeUnit(present.getHours())
+  const minutes = formatTimeUnit(present.getMinutes())
+  const seconds = formatTimeUnit(present.getSeconds())
 
-  const clockHTML = `
-    <span>${String(hours).length === 1 ? `0${hours}` : hours}</span> :
-    <span>${String(minutes).length === 1 ? `0${minutes}` : minutes}</span> :
-    <span>${String(seconds).length === 1 ? `0${seconds}` : seconds}</span>
-  `
-
-  clockContainer.innerHTML = clockHTML
+  clockContainer.innerHTML = getClockHTML(hours, minutes, seconds)
 }
 
 setInterval(updateClock, 1000)
