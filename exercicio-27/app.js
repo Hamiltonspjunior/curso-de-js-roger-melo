@@ -9,7 +9,9 @@ console.log('Linha 2')
 console.log('Linha 3')
 console.log('Linha 4')
 
-
+setTimeout(() => {
+  console.log('Código assíncrono executado!')
+}, 2000)
 
 console.log('Linha 5')
 console.log('Linha 6')
@@ -27,7 +29,9 @@ function logGreeting (name) {
   console.log(`olá, ${name}`)
 }
 
-// x(logGreeting)
+const runCallBack = (callback, name) => callback(name)
+
+runCallBack(logGreeting, 'Hamilton')
 
 /*
   03
@@ -36,7 +40,8 @@ function logGreeting (name) {
 */
 
 const numbers = [3, 4, 10, 20]
-const lesserThanFive = numbers.filter(num => num < 5)
+const isLessThanFive = num => num < 5
+const lesserThanFive = numbers.filter(isLessThanFive)
 
 console.log(lesserThanFive)
 
@@ -47,11 +52,7 @@ console.log(lesserThanFive)
 */
 
 const prices = [12, 19, 7, 209]
-let totalPrice = 0
-
-for (let i = 0; i < prices.length; i++) {
-  totalPrice += prices[i]
-}
+let totalPrice = prices.reduce((acc, price) => acc + price, 0)
 
 console.log(`Preço total: ${totalPrice}`)
 
@@ -63,6 +64,7 @@ console.log(`Preço total: ${totalPrice}`)
 */
 
 let car = { color: 'amarelo' }
+car['color'] = 'azul'
 
 /*
   06
@@ -73,6 +75,14 @@ let car = { color: 'amarelo' }
   - Se todos os argumentos forem passados, retorne a string 'A função foi 
     invocada com 3 argumentos'.
 */
+
+const func = (arg1, arg2, arg3) => {
+  return arg3 ? 
+    'A função foi invocada com 3 argumentos' : 
+    'A função deve ser invocada com 3 argumentos'
+}
+
+console.log(func(1, 2, 3))
 
 /*
   07
@@ -98,5 +108,28 @@ let car = { color: 'amarelo' }
 
 let booksBox = {
   spaces: 5,
-  booksIn: 0
+  booksIn: 0,
+  addBooks(numberOfBooks) {
+    const freeSpaces = this.spaces - this.booksIn
+    const isBoxFull = this.booksIn === this.spaces
+    const correctMessage = freeSpaces === 1 ? 
+      `Só cabe mais ${freeSpaces} livro` : 
+      `Só cabem mais ${freeSpaces} livros`
+
+    if (isBoxFull) {
+      return 'A caixa já está cheia'
+    }
+
+    if (numberOfBooks > freeSpaces) {
+      return correctMessage
+    }
+
+    this.booksIn += numberOfBooks
+
+    return `Já há '${this.booksIn}' livros na caixa`
+  }
 }
+
+console.log(booksBox.addBooks(2))
+console.log(booksBox.addBooks(2))
+console.log(booksBox.addBooks(2))
