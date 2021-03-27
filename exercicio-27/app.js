@@ -29,9 +29,11 @@ function logGreeting (name) {
   console.log(`olá, ${name}`)
 }
 
-const runCallBack = (callback, name) => callback(name)
+const x = callBack => {
+  callBack('Hamilton')
+}
 
-runCallBack(logGreeting, 'Hamilton')
+x(logGreeting)
 
 /*
   03
@@ -40,8 +42,8 @@ runCallBack(logGreeting, 'Hamilton')
 */
 
 const numbers = [3, 4, 10, 20]
-const isLessThanFive = num => num < 5
-const lesserThanFive = numbers.filter(isLessThanFive)
+const getLessThanFive = num => num < 5
+const lesserThanFive = numbers.filter(getLessThanFive)
 
 console.log(lesserThanFive)
 
@@ -52,7 +54,8 @@ console.log(lesserThanFive)
 */
 
 const prices = [12, 19, 7, 209]
-let totalPrice = prices.reduce((acc, price) => acc + price, 0)
+const getTotalPrice = (acc, price) => acc + price
+const totalPrice = prices.reduce(getTotalPrice, 0)
 
 console.log(`Preço total: ${totalPrice}`)
 
@@ -64,7 +67,9 @@ console.log(`Preço total: ${totalPrice}`)
 */
 
 let car = { color: 'amarelo' }
-car['color'] = 'azul'
+let secondCar = car
+secondCar.color = 'azul'
+console.log(car.color, secondCar.color)
 
 /*
   06
@@ -76,10 +81,11 @@ car['color'] = 'azul'
     invocada com 3 argumentos'.
 */
 
-const func = (arg1, arg2, arg3) => {
-  return arg3 ? 
-    'A função foi invocada com 3 argumentos' : 
-    'A função deve ser invocada com 3 argumentos'
+const func = (param1, param2, param3) => {
+  const isSomeParameterUndefined = [param1, param2, param3].includes(undefined)
+  return isSomeParameterUndefined
+    ? 'A função deve ser invocada com 3 argumentos'
+    : 'A função foi invocada com 3 argumentos'
 }
 
 console.log(func(1, 2, 3))
@@ -108,28 +114,40 @@ console.log(func(1, 2, 3))
 
 let booksBox = {
   spaces: 5,
-  booksIn: 0,
-  addBooks(numberOfBooks) {
-    const freeSpaces = this.spaces - this.booksIn
-    const isBoxFull = this.booksIn === this.spaces
-    const correctMessage = freeSpaces === 1 ? 
-      `Só cabe mais ${freeSpaces} livro` : 
-      `Só cabem mais ${freeSpaces} livros`
-
-    if (isBoxFull) {
-      return 'A caixa já está cheia'
-    }
-
-    if (numberOfBooks > freeSpaces) {
-      return correctMessage
-    }
-
-    this.booksIn += numberOfBooks
-
-    return `Já há '${this.booksIn}' livros na caixa`
-  }
+  booksIn: 0
 }
 
-console.log(booksBox.addBooks(2))
-console.log(booksBox.addBooks(2))
-console.log(booksBox.addBooks(2))
+const getPluralorSingular = (quantity, singular, plural) => 
+  quantity === 1 ? singular : plural
+
+const getAvaliabeSpacesMessage = (spaces, booksIn) => {
+  const availableSpaces = spaces - booksIn
+  const fitSingularOrPlural = getPluralorSingular(availableSpaces, `cabe`, 'cabem')
+  const bookSingleOrPlural = getPluralorSingular(availableSpaces, `livro`, 'livros')
+
+  return `Só ${fitSingularOrPlural} mais ${availableSpaces} ${bookSingleOrPlural}`
+}
+
+booksBox.addBooks = booksQuantity => {
+  const { spaces } = booksBox
+  const isBoxFilled = booksBox.booksIn === spaces
+  const boxSpacesAreNotEnough = booksQuantity + booksBox.booksIn > spaces
+
+  if (isBoxFilled) {
+    return 'A caixa já está cheia'
+  }
+
+  if (boxSpacesAreNotEnough) {
+    return getAvaliabeSpacesMessage(spaces, booksBox.booksIn)
+  }
+
+  booksBox.booksIn += booksQuantity
+
+  const bookSingleOrPlural = getPluralorSingular(booksBox.booksIn, `livro`, 'livros')
+  return `Já há '${booksBox.booksIn}' ${bookSingleOrPlural} na caixa`
+}
+
+console.log(booksBox.addBooks(1))
+console.log(booksBox.addBooks(3))
+console.log(booksBox.addBooks(4))
+console.log(booksBox)
