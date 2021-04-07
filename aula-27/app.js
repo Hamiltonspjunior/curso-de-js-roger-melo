@@ -24,13 +24,13 @@ console.log(4)
   - Nesse tipo de operação, normalmente é utilizado uma função de callback que vai ser responsável por lidar com a
   resposta da requisição, no momento em que ela finalizar
   - Para fazer uma operação assíncrona o browser lida com essa operação em uma thread separada, para que o restante 
-  da aplicação continua executando
+  da aplicação continue executando
   - Requests HHTP são usados para fazer requisições a um banco de dados ou uma API, por exemplo
   - API(Application Programming Interface) é uma forma de uma aplicação utilizar as funcionalidades de outra. Ou seja,
   uma API fornece uma interface para um sistema acessar as funcionalidades de outro sistema
   - O HTTP(Hypertext Transfer Protocol) é o protocolo padrão utilizado na internet para 
   troca de informação entre computadores
-  - As requisições HTTP são feitas um endpoint, que é uma URL fornecida pela API ou 
+  - As requisições HTTP são feitas em um endpoint, que é uma URL fornecida pela API ou 
   servidor para que nós possamos coletar informações
   - Sempre que um request HTTP é feito a API ou Servidor retorna uma resposta(response), com as informações requisitadas
   - A resposta que o servidor nos retorna, normalmente, é no formato JSON
