@@ -19,15 +19,15 @@
 const request = new XMLHttpRequest()
 
 request.addEventListener('readystatechange', () => {
-  const isRequestComplete = request.readyState === 4
-  const isRequestSuccessful = request.status === 200
+  const isRequestOk = request.readyState === 4 && request.status === 200
+  const isRequestNotOk = request.readyState === 4
   
-  if (isRequestComplete) {
-    if (isRequestSuccessful) {
-      console.log(request.responseText)
-      return
-    }
+  if (isRequestOk) {
+    console.log(request.responseText)
+    return
+  }
 
+  if (isRequestNotOk) {
     console.log('Não foi possível obter os dados do pokémon')
   }
 })
@@ -50,7 +50,7 @@ request.send()
     - Quantos metros você caminhou (number iniciado em 0).
 */
 
-const personalInfo = {
+let person = {
   firstName: 'Hamilton',
   lastName: 'Junior',
   sex: 'Masculino',
@@ -58,7 +58,7 @@ const personalInfo = {
   height: 1.72,
   weight: 91.3,
   isWalking: false,
-  metersWalked: 0
+  walkedMeters: 0
 }
 
 /*
@@ -70,15 +70,15 @@ const personalInfo = {
   - Após criar o método, adicione 5 anos à idade do objeto.
 */
 
-personalInfo.incrementAge = () => {
-  personalInfo.age++
+person.incrementAge = () => {
+  person.age++
 }
 
-for (let i = 1; i <= 5; i++) {
-  personalInfo.incrementAge()
+for (let i = 0; i < 5; i++) {
+  person.incrementAge()
 }
 
-console.log(personalInfo.age)
+console.log(person.age)
 
 /*
   04
@@ -91,17 +91,16 @@ console.log(personalInfo.age)
     método 4x, com diferentes metragens passadas por parâmetro.
 */
 
-personalInfo.sumMetersWalked = metersWalked => {
-  personalInfo.metersWalked += metersWalked
-  personalInfo.isWalking = true
+person.walk = meters => {
+  person.walkedMeters += meters
+  person.isWalking = true
 }
 
-personalInfo.sumMetersWalked(1500)
-personalInfo.sumMetersWalked(800)
-personalInfo.sumMetersWalked(700)
-personalInfo.sumMetersWalked(1200)
+const meters = [7, 13, 15, 20]
 
-console.log(personalInfo.isWalking, personalInfo.metersWalked)
+meters.forEach(meter => person.walk(meter))
+
+console.log(person.isWalking, person.walkedMeters)
 
 /*
   05
@@ -120,20 +119,23 @@ console.log(personalInfo.isWalking, personalInfo.metersWalked)
       "metro", no singular.
 */
 
-const getSingularOrPlural = (unit, singular, plural) => 
+const getPluralOrSingular = (unit, singular, plural) => 
   unit === 1 ? singular : plural
 
-personalInfo.getGreetingMessage = () => {
-  const { firstName, lastName, age, sex, height, weight, metersWalked } = personalInfo
+person.introduction = () => {
+  const { firstName, lastName, age, sex, height, weight, walkedMeters } = person
   const fullName = `${firstName} ${lastName}`
-  const correctPronoun = sex === 'Feminino' ? 'a' : 'o'
-  const correctAgeWord = getSingularOrPlural(age, 'ano', 'anos')
-  const correctMetersWord = getSingularOrPlural(metersWalked, 'metro', 'metros')
+  const correctGender = sex === 'Feminino' ? 'a' : 'o'
+  const agePluralOrSingular = getPluralOrSingular(age, 'ano', 'anos')
+  const walkedMetersPluralOrSingular = 
+    getPluralOrSingular(walkedMeters, 'metro', 'metros')
+  const heightMetersPluralOrSingular = 
+    getPluralOrSingular(height, 'metro', 'metros')
 
-  return `Oi. Eu sou ${correctPronoun} ${fullName}, tenho ${age} ${correctAgeWord}, ${height} metros de altura, peso ${weight} quilos e, só hoje, eu já caminhei ${metersWalked} ${correctMetersWord}.`
+  return `Oi. Eu sou ${correctGender} ${fullName}, tenho ${age} ${agePluralOrSingular}, ${height} ${heightMetersPluralOrSingular} de altura, peso ${weight} quilos e, só hoje, eu já caminhei ${walkedMeters} ${walkedMetersPluralOrSingular}.`
 }
 
-console.log(personalInfo.getGreetingMessage())
+console.log(person.introduction())
 
 /*
   06
@@ -147,22 +149,16 @@ console.log(personalInfo.getGreetingMessage())
     - Faça isso até que 7 valores truthy sejam passados.
 */
 
-const isTruthy = value => !!value
 
-console.log(isTruthy(false))
-console.log(isTruthy(0))
-console.log(isTruthy(''))
-console.log(isTruthy(null))
-console.log(isTruthy(undefined))
-console.log(isTruthy(NaN))
+const falsyValues = [false, 0, '', null, undefined, NaN]
+const truthyValues = [true, 1, 'Hamilton', [], { foo: 'bar' }, () => {}, -10]
 
-console.log(isTruthy(true))
-console.log(isTruthy(1))
-console.log(isTruthy('Hamilton'))
-console.log(isTruthy([]))
-console.log(isTruthy({ foo: 'bar' }))
-console.log(isTruthy(() => {}))
-console.log(isTruthy(-10))
+const isTruthy = value => Boolean(value)
+const logFalsyValues = falsyValue => console.log(isTruthy(falsyValue))
+const logTruthyValues = truthyValue => console.log(isTruthy(truthyValue))
+
+falsyValues.forEach(logFalsyValues)
+truthyValues.forEach(logTruthyValues)
 
 /*
   07
