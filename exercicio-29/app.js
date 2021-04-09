@@ -13,6 +13,54 @@
       executado quando o request anterior for finalizado.
 */
 
+const getPokemon = (url, callback) => {
+  const request = new XMLHttpRequest()
+
+  request.addEventListener('readystatechange', () => {
+    const isRequestOk = request.readyState === 4 && request.status === 200
+    const isRequestNotOk = request.readyState === 4
+
+    if (isRequestOk) {
+      const data = JSON.parse(request.responseText)
+      callback(null, data)
+      return
+    }
+
+    if (isRequestNotOk) {
+      callback('Não foi possível obter o Pokémon', null)
+    }
+  })
+
+  request.open('GET', url)
+  request.send()
+}
+
+getPokemon('https://pokeapi.co/api/v2/pokemon/bulbasaur', (error, data) => {
+  if (error) {
+    console.log(error)
+    return
+  }
+
+  console.log(`Pokémon obtido: ${data.name}`)
+  getPokemon('https://pokeapi.co/api/v2/pokemon/charmander', (error, data) => {
+    if (error) {
+      console.log(error)
+      return
+    }
+  
+    console.log(`Pokémon obtido: ${data.name}`)
+    getPokemon('https://pokeapi.co/api/v2/pokemon/squirtle', (error, data) => {
+      if (error) {
+        console.log(error)
+        return
+      }
+    
+      console.log(`Pokémon obtido: ${data.name}`)
+    })
+  })
+})
+
+
 /*
   02
 
@@ -35,6 +83,20 @@
   curso, onde falaremos sobre TDD. Vá se aquecendo =)
 */
 
+const map = (array, callback) => {
+  const newArray = []
+
+  for (let i = 0; i < array.length; i++) {
+    const item = callback(array[i], i, array)
+    newArray.push(item)
+  }
+
+  return newArray
+}
+
+console.log(map([1, 2, 3], number => number * 2)) // [2, 4, 6];
+console.log(map([1, 2, 3], number => number * 3)) // [3, 6, 9];
+
 /*
   03
 
@@ -44,10 +106,10 @@
 
 const person = {
   name: 'Roger',
-  getName: () => this.name
+  getName() { return this.name }
 }
 
-// console.log(person.getName())
+console.log(person.getName())
 
 /*
   04
@@ -59,7 +121,10 @@ const person = {
 */
 
 const x = 'x'
-// const x = 'y'
+
+const myFunc = () => {
+  const x = 'y'
+}
 
 /*
   05
@@ -68,12 +133,7 @@ const x = 'x'
     conseguir.
 */
 
-const getFullName = (user) => {
-  const firstName = user.firstName
-  const lastName = user.lastName
-
-  return `${firstName} ${lastName}`
-}
+const getFullName = ({ firstName, lastName }) => `${firstName} ${lastName}`
 
 console.log(getFullName({ firstName: 'Afonso', lastName: 'Solano' }))
 
@@ -91,6 +151,22 @@ console.log(getFullName({ firstName: 'Afonso', lastName: 'Solano' }))
   - Exiba o hexadecimal de 8 cores diferentes usando a função criada acima.
 */
 
+const convertToHex = color => {
+  const colors = {
+    red: '#ff0400',
+    blue: '#0d00ff',
+    yellow: '#fff700',
+    green: '#00ff04',
+    purple: '#bb00ff',
+  }
+
+  return colors[color] 
+    ? `O hexadecimal para a cor ${color} é ${colors[color]}` 
+    : `Não temos o equivalente hexadecimal para ${color}`
+}
+
+const colors = ['red', 'blue', 'yellow', 'green', 'purple', 'grey', 'black', 'white']
+colors.forEach(color => console.log(convertToHex(color)))
 
 /*
   07
@@ -115,3 +191,11 @@ const people = [
   { id: 9 , name: 'Gabriel', age: 20, federativeUnit: 'São Paulo' },
   { id: 73, name: 'Aline', age: 19, federativeUnit: 'Brasília' }
 ]
+
+const agesFrequence = people.reduce((acc, person) => {
+  acc[person.age] ? acc[person.age]++ : acc[person.age] = 1
+  
+  return acc
+}, {})
+
+console.log(agesFrequence)
