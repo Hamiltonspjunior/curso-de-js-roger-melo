@@ -35,31 +35,23 @@ const getPokemon = (url, callback) => {
   request.send()
 }
 
-getPokemon('https://pokeapi.co/api/v2/pokemon/bulbasaur', (error, data) => {
-  if (error) {
-    console.log(error)
-    return
-  }
+const logPokemonData = (error, data) => error 
+  ? console.log(error) 
+  : console.log(`Pokémon obtido: ${data.name}`)
 
-  console.log(`Pokémon obtido: ${data.name}`)
-  getPokemon('https://pokeapi.co/api/v2/pokemon/charmander', (error, data) => {
-    if (error) {
-      console.log(error)
-      return
-    }
-  
-    console.log(`Pokémon obtido: ${data.name}`)
-    getPokemon('https://pokeapi.co/api/v2/pokemon/squirtle', (error, data) => {
-      if (error) {
-        console.log(error)
-        return
-      }
-    
-      console.log(`Pokémon obtido: ${data.name}`)
-    })
+const getPokemonUrl = id => `https://pokeapi.co/api/v2/pokemon/${id}`
+
+const bulbasaur = getPokemonUrl(1)
+const charmander = getPokemonUrl(4)
+const squirtle = getPokemonUrl(7)
+
+getPokemon(bulbasaur, (error, data) => {
+  logPokemonData(error, data)
+  getPokemon(charmander, (error, data) => {
+    logPokemonData(error, data)
+    getPokemon(squirtle, logPokemonData)
   })
 })
-
 
 /*
   02
@@ -84,13 +76,14 @@ getPokemon('https://pokeapi.co/api/v2/pokemon/bulbasaur', (error, data) => {
 */
 
 const map = (array, callback) => {
-  const newArray = []
+  let newArray = []
 
-  for (let i = 0; i < array.length; i++) {
-    const item = callback(array[i], i, array)
-    newArray.push(item)
+  const addNewItemToNewArray = (item, index) => {
+    const newItem = callback(item, index, array)
+    newArray.push(newItem)
   }
 
+  array.forEach(addNewItemToNewArray)
   return newArray
 }
 
@@ -106,7 +99,7 @@ console.log(map([1, 2, 3], number => number * 3)) // [3, 6, 9];
 
 const person = {
   name: 'Roger',
-  getName() { return this.name }
+  getName: () => person.name // Evitando usar o this
 }
 
 console.log(person.getName())
@@ -122,9 +115,12 @@ console.log(person.getName())
 
 const x = 'x'
 
-const myFunc = () => {
+const getX = () => {
   const x = 'y'
+  return x
 }
+
+console.log(x, getX())
 
 /*
   05
@@ -166,7 +162,9 @@ const convertToHex = color => {
 }
 
 const colors = ['red', 'blue', 'yellow', 'green', 'purple', 'grey', 'black', 'white']
-colors.forEach(color => console.log(convertToHex(color)))
+
+const logColorMessage = color => console.log(convertToHex(color))
+colors.forEach(logColorMessage)
 
 /*
   07
@@ -192,10 +190,12 @@ const people = [
   { id: 73, name: 'Aline', age: 19, federativeUnit: 'Brasília' }
 ]
 
-const agesFrequence = people.reduce((acc, person) => {
-  acc[person.age] ? acc[person.age]++ : acc[person.age] = 1
-  
+const createOrIncrementAgeFrequence = (acc, person) => {
+  acc[person.age] = acc[person.age] + 1 || 1
+
   return acc
-}, {})
+}
+
+const agesFrequence = people.reduce(createOrIncrementAgeFrequence, {})
 
 console.log(agesFrequence)
