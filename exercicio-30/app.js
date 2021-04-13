@@ -30,8 +30,8 @@ const getUsers = url => new Promise((resolve, reject) => {
 })
 
 getUsers('https://jsonplaceholder.typicode.com/users')
-  .then(users => console.log(users))
-  .catch(error => console.log(error))
+  .then(console.log)
+  .catch(console.log)
 
 
 /*
@@ -48,28 +48,30 @@ getUsers('https://jsonplaceholder.typicode.com/users')
   - Se o operador não for válido, retorne a mensagem "Operação inválida."
 */
 
-const calculator = operator => (firstNumber, secondNumber) => {
-  const validOperators = {
-    '+': firstNumber + secondNumber,
-    '-': firstNumber - secondNumber,
-    '*': firstNumber * secondNumber,
-    '/': firstNumber / secondNumber,
-    '%': firstNumber % secondNumber
-  }
-  const operation = validOperators[operator]
-  const operationSentence = 
-    `Resultado da operação: ${firstNumber} ${operator} ${secondNumber} = ${operation}.`
+const getOperationMessage = (num1, num2, operator, operation) => 
+  `Resultado da operação: ${num1} ${operator} ${num2} = ${operation}.`
 
-  return operation
-    ? operationSentence
-    : 'Operação inválida'
-}
+const calculator = operator => (num1, num2) => ({
+  '+': getOperationMessage(num1, num2, operator, num1 + num2),
+  '-': getOperationMessage(num1, num2, operator, num1 - num2),
+  '*': getOperationMessage(num1, num2, operator, num1 * num2),
+  '/': getOperationMessage(num1, num2, operator, num1 / num2),
+  '%': getOperationMessage(num1, num2, operator, num1 % num2),
+})[operator] || 'Operação inválida.'
+
 
 const sum = calculator('+')
 const subtraction = calculator('-')
-
-console.log(sum(2, 5))
-console.log(subtraction(10, 2))
+const multiplication = calculator('*')
+const division = calculator('/')
+const remainder = calculator('%')
+const test = calculator('y')
+console.log(sum(2, 2))
+console.log(subtraction(2, 2))
+console.log(multiplication(2, 2))
+console.log(division(2, 2))
+console.log(remainder(2, 2))
+console.log(test(2, 2))
 
 /*
   03
@@ -87,13 +89,10 @@ console.log(subtraction(10, 2))
 
 const sul = ['Paraná', 'Rio Grande do Sul', 'Santa Catarina']
 const sudeste = ['Espirito Santo', 'Minas Gerais', 'Rio de Janeiro', 'São Paulo']
-const brasil = sul.concat(sudeste)
-console.log(brasil)
-
+let brasil = sul.concat(sudeste)
 brasil.unshift('Acre', 'Amapá', 'Amazonas')
-
-console.log(brasil)
 console.log(brasil.shift())
+console.log(brasil)
 
 const newSul = brasil.slice(2, 5)
 console.log(newSul)
@@ -130,21 +129,15 @@ const nordeste = [
 ]
 
 const newSudeste = brasil.splice(5, 4)
-console.log(newSudeste)
-
-nordeste.forEach(state => brasil.push(state))
-console.log(brasil)
+brasil = brasil.concat(nordeste)
 
 const newBrasil = brasil.map((state, index) => ({ id: index, estado: state }))
-console.log(newBrasil)
+const hasMoresThan7Letters = brasil.every(state => state.length > 7)
+const message = hasMoresThan7Letters
+  ? 'Sim, todos os estados tem mais de 7 letras.'
+  : 'Nem todos os estados tem mais de 7 letras.'
 
-const haveStatesMoreThanSevenLetters = brasil.every(state => state.length > 7)
-
-if (haveStatesMoreThanSevenLetters) {
-  console.log('Sim, todos os estados tem mais de 7 letras.')
-} else {
-  console.log('Nem todos os estados tem mais de 7 letras.')
-}
+console.log(message)
 
 /*
   05
@@ -160,16 +153,17 @@ if (haveStatesMoreThanSevenLetters) {
     par. Atribua este novo array à uma constante.
 */
 
-const isCearaIncluded = brasil.some(state => state === 'Ceará')
-if (isCearaIncluded) {
-  console.log('Ceará está incluído.')
-} else {
-  console.log('Ceará não foi incluído =/')
-}
+const isCearaIncluded = brasil.includes('Ceará')
+const cearaMessage = isCearaIncluded 
+  ? 'Ceará está incluído.' 
+  : 'Ceará não foi incluído =/'
+console.log(cearaMessage)
 
-const otherNewBrasil = newBrasil.map(({ id, estado }) => 
-  ({ id: id + 1, estado: `${estado} pertence ao Brasil.` }))
-console.log('Other new Brasil', otherNewBrasil)
+const otherNewBrasil = newBrasil.map(({ id, estado }) => ({ 
+  id: id + 1, 
+  estado: `${estado} pertence ao Brasil.` 
+}))
+console.log(otherNewBrasil)
 
-const oddStates = otherNewBrasil.filter(({ id }) => id % 2 === 0)
-console.log(oddStates)
+const filteredNewNewBrasil = otherNewBrasil.filter(({ id }) => id % 2 === 0)
+console.log(filteredNewNewBrasil)
