@@ -7,6 +7,17 @@
   - Implemente uma segunda função que exibe, no console, seus dados de usuário 
     do GitHub.
 */
+const getUserInfo = async username => {
+  const userInfo = await fetch(`https://api.github.com/users/${username}`)
+  return userInfo.json()
+}
+
+const logUserInfo = async username => {
+  const userInfo = await getUserInfo(username)
+  console.log(userInfo)
+}
+
+logUserInfo('Hamiltonspjunior')
 
 /*
   02
@@ -17,6 +28,11 @@
 */
 
 const numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+const isDivisibleBy2Or3 = number => 
+  number % 2 === 0 || number % 3 === 0 ? number : false
+
+const divisibleNumbersBy2Or3 = numbers.filter(isDivisibleBy2Or3)
+console.log(divisibleNumbersBy2Or3)
 
 /*
   03
@@ -31,6 +47,12 @@ const numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
     - Natália => "PNaPtáPlia";
     - Rafaela => "PRaPfaPePla".
 */
+
+const name = ['Ha', 'mil', 'ton']
+const transformInPLanguage = (acc, syllable) => acc += `P${syllable}`
+const nameInPLanguage = name.reduce(transformInPLanguage, '')
+
+console.log(nameInPLanguage)
 
 /*
   04
@@ -47,6 +69,15 @@ const numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
   Dica: pesquise pelo método split.
 */
 
+const firstName = 'Hamilton'
+
+const logLetterMessage = (letter, index) => 
+  console.log(`"${letter}" é a ${index + 1}ª letra do meu nome;`)
+
+firstName
+  .split('')
+  .forEach(logLetterMessage)
+
 /*
   05
 
@@ -59,6 +90,14 @@ const numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 
   Dica: pesquise pelo método Object.keys().
 */
+
+const person = {
+  name: 'Hamilton',
+  lastname: 'Junior',
+  age: 25
+}
+
+console.log(Object.keys(person))
 
 /*
   06
@@ -74,6 +113,15 @@ const numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 */
 
 const scores = [100, 90, 85, 100, 60, 85, 100, 90, 55, 75, 60]
+
+const getNumberOfOccurrences = (array, value) => {
+  const numberOfOccurrences = array.reduce((acc, item) => 
+    item === value ? acc += 1 : acc, 0)
+
+  return numberOfOccurrences
+}
+
+console.log(getNumberOfOccurrences(scores, 100))
 
 /*
   07
@@ -98,3 +146,25 @@ const scores = [100, 90, 85, 100, 60, 85, 100, 90, 55, 75, 60]
   Dica: lembre-se que o método filter inclui o item em questão no novo array 
   que está sendo gerado **apenas** se a função retorna um valor truthy.
 */
+
+const filter = (array, callback) => {
+  const filteredArray = []
+  const filterArray = (item, index, array) => {
+    const isCallbackReturnTrue = Boolean(callback(item, index, array))
+    
+    if (isCallbackReturnTrue) {
+      filteredArray.push(item)
+    }  
+  }
+
+  array.forEach(filterArray)
+
+  return filteredArray
+}
+
+console.log(filter([1, 2, 3], item => item))
+console.log(filter([0, 1, 2], item => item))
+console.log(filter([1, 2, 3], item => item < 2))
+console.log(filter([1, 2, 3, 5], (item, index) => item === index + 1))
+console.log(filter([1, 2, 3, 2, 1, 5], (item, index, array) =>
+  index === array.indexOf(item)))
