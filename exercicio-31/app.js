@@ -7,17 +7,15 @@
   - Implemente uma segunda função que exibe, no console, seus dados de usuário 
     do GitHub.
 */
-const getUserInfo = async username => {
-  const userInfo = await fetch(`https://api.github.com/users/${username}`)
-  return userInfo.json()
+const fetchGitHubUser = async username => {
+  const userData = await fetch(`https://api.github.com/users/${username}`)
+  return userData.json()
 }
 
-const logUserInfo = async username => {
-  const userInfo = await getUserInfo(username)
-  console.log(userInfo)
-}
+const logGitHubUser = async username =>
+  console.log(await fetchGitHubUser(username))
 
-logUserInfo('Hamiltonspjunior')
+logGitHubUser('Hamiltonspjunior')
 
 /*
   02
@@ -28,11 +26,10 @@ logUserInfo('Hamiltonspjunior')
 */
 
 const numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
-const isDivisibleBy2Or3 = number => 
-  number % 2 === 0 || number % 3 === 0 ? number : false
+const getDivisibleBy2Or3 = numbers => numbers
+  .filter(number => number % 2 === 0 || number % 3 === 0)
 
-const divisibleNumbersBy2Or3 = numbers.filter(isDivisibleBy2Or3)
-console.log(divisibleNumbersBy2Or3)
+console.log(getDivisibleBy2Or3(numbers))
 
 /*
   03
@@ -49,10 +46,10 @@ console.log(divisibleNumbersBy2Or3)
 */
 
 const name = ['Ha', 'mil', 'ton']
-const transformInPLanguage = (acc, syllable) => acc += `P${syllable}`
-const nameInPLanguage = name.reduce(transformInPLanguage, '')
+const getNameInPLanguage = name => name
+  .reduce((acc, syllable) => `${acc}P${syllable}`, '')
 
-console.log(nameInPLanguage)
+console.log(getNameInPLanguage(name))
 
 /*
   04
@@ -71,12 +68,12 @@ console.log(nameInPLanguage)
 
 const firstName = 'Hamilton'
 
-const logLetterMessage = (letter, index) => 
-  console.log(`"${letter}" é a ${index + 1}ª letra do meu nome;`)
-
-firstName
+const logSplittedName = name => name
   .split('')
-  .forEach(logLetterMessage)
+  .forEach((letter, index) => 
+    console.log(`"${letter}" é a ${index + 1}ª letra do meu nome;`)) 
+
+logSplittedName(firstName)
 
 /*
   05
@@ -114,14 +111,10 @@ console.log(Object.keys(person))
 
 const scores = [100, 90, 85, 100, 60, 85, 100, 90, 55, 75, 60]
 
-const getNumberOfOccurrences = (array, value) => {
-  const numberOfOccurrences = array.reduce((acc, item) => 
-    item === value ? acc += 1 : acc, 0)
+const getOccurrences = (array, value) => 
+  array.reduce((acc, item) => item === value ? acc + 1 : acc, 0)
 
-  return numberOfOccurrences
-}
-
-console.log(getNumberOfOccurrences(scores, 100))
+console.log(getOccurrences(scores, 100))
 
 /*
   07
@@ -147,19 +140,19 @@ console.log(getNumberOfOccurrences(scores, 100))
   que está sendo gerado **apenas** se a função retorna um valor truthy.
 */
 
-const filter = (array, callback) => {
-  const filteredArray = []
-  const filterArray = (item, index, array) => {
-    const isCallbackReturnTrue = Boolean(callback(item, index, array))
-    
-    if (isCallbackReturnTrue) {
-      filteredArray.push(item)
-    }  
+const filter = (array, func) => {
+  const newArray = []
+
+  const filterArray = (item, index) => {
+    const itemShouldBeAdded = func(item, index, array)
+
+    if (itemShouldBeAdded) {
+      newArray.push(item)
+    }
   }
 
   array.forEach(filterArray)
-
-  return filteredArray
+  return newArray
 }
 
 console.log(filter([1, 2, 3], item => item))
