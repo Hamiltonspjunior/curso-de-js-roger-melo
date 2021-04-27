@@ -21,49 +21,55 @@
   - Ignore os avisos no console. Para limpá-lo, pressione "ctrl + L".
 */
 
-const formSearch = document.querySelector('form')
-const output = document.querySelector('.out')
+const form = document.querySelector('form')
+const GIFsContainer = document.querySelector('div')
 
-const fetchGif = async value => {
+const APIKey = '2v0cLcIvItWYO97uEOQIByt7Yk0o7y1G'
+
+const getGIPHYAPIUrl = GIFName => 
+  `https://api.giphy.com/v1/gifs/search?api_key=${APIKey}&limit=1&q=${GIFName}`
+
+const generateGIFImg = (downsizedGifUrl, GIFData) => {
+  const img = document.createElement('img')
+
+  img.setAttribute('src', downsizedGifUrl)
+  img.setAttribute('alt', GIFData.data[0].title)
+
+  return img
+}
+
+const fetchGIF = async inputValue => {
   try {
-    const response = await fetch(`https://api.giphy.com/v1/gifs/search?api_key=2v0cLcIvItWYO97uEOQIByt7Yk0o7y1G&limit=1&q=${value}`)
+    const GIPHYAPIUrl = getGIPHYAPIUrl(inputValue)
+    const response = await fetch(GIPHYAPIUrl)
 
-      if (!response.ok) {
+    if (!response.ok) {
       throw new Error('Não foi possível obter os dados')
     }
 
     return response.json()
   } catch (error) {
-    console.log(error)
+    alert(error.message)
   }
 }
 
-const getGifUrl = gifData => gifData.data[0].images.original.url
+const insertGIFIntoDOM = async inputValue => {
+  const GIFData = await fetchGIF(inputValue)
 
-const insertGifIntoPage = url => {
-  const imgElem = document.createElement('img')
+  if (GIFData) {
+    const downsizedGifUrl = GIFData.data[0].images.downsized.url
+    const img = generateGIFImg(downsizedGifUrl, GIFData)
 
-  imgElem.setAttribute('src', url)
-  output.prepend(imgElem)
+    GIFsContainer.insertAdjacentElement('afterbegin', img)
+
+    form.reset()
+  }
 }
-
-const resetForm = () => {
-  formSearch.reset()
-  formSearch.search.focus()
-}
-
-formSearch.addEventListener('submit', event => {
+  
+form.addEventListener('submit', event => {
   event.preventDefault()
 
   const inputValue = event.target.search.value
 
-  if (inputValue) {
-    fetchGif(inputValue)
-    .then(getGifUrl)
-    .then(insertGifIntoPage)
-  }
-
-  resetForm()
+  insertGIFIntoDOM(inputValue)
 })
-
-// 2v0cLcIvItWYO97uEOQIByt7Yk0o7y1G
